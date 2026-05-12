@@ -1,0 +1,55 @@
+{
+  "name": "@nepali-cal/datepicker",
+  "version": "1.0.0",
+  "description": "Fully customizable Nepali (Bikram Sambat) DatePicker for React. Theming, composition, and BS/AD switching out of the box.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./styles": "./dist/styles.css",
+    "./tailwind": "./tailwind.preset.js"
+  },
+  "sideEffects": [
+    "./dist/styles.css"
+  ],
+  "keywords": [
+    "nepali",
+    "datepicker",
+    "bikram-sambat",
+    "calendar",
+    "nepal",
+    "react",
+    "typescript",
+    "BS",
+    "AD",
+    "customizable",
+    "theming"
+  ],
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "dependencies": {
+    "@nepali-cal/core": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "tsup": "^8.0.0"
+  },
+  "scripts": {
+    "build": "tsup src/index.tsx --format cjs,esm --dts --external react",
+    "dev": "tsup src/index.tsx --format cjs,esm --dts --watch"
+  },
+  "license": "MIT",
+  "files": [
+    "dist",
+    "tailwind.preset.js"
+  ]
+}
