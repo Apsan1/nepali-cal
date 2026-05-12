@@ -36,13 +36,14 @@ import type {
 import { useThemeVars } from './hooks/useTheme'
 import {
     useCalendar,
-    buildCalendarGrid,
-    bsToAD,
-    adToBS,
-    bsMonthDays,
-    todayBS,
     resolveDisabled,
 } from './hooks/useCalendar'
+import {
+    todayBS,
+    bsToAD,
+    bsMonthDays,
+    buildCalendarGrid,
+} from "@nepali-cal/core";
 
 // ─── locale data ──────────────────────────────────────────────────
 
@@ -848,3 +849,4 @@ export function NepaliInput({
         </div>
     )
 }
+export { todayBS, bsToAD, bsMonthDays, buildCalendarGrid } from "@nepali-cal/core";
