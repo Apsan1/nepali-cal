@@ -1,0 +1,37 @@
+{
+  "name": "@nepali-cal/core",
+  "version": "1.0.0",
+  "description": "Zero-dependency Bikram Sambat ↔ Gregorian conversion engine with full NepaliDate class",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "keywords": [
+    "nepali",
+    "bikram-sambat",
+    "calendar",
+    "date",
+    "nepal",
+    "BS",
+    "AD"
+  ],
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0"
+  },
+  "license": "MIT"
+}
