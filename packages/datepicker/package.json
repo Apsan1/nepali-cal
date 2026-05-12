@@ -2,6 +2,10 @@
   "name": "@nepali-cal/datepicker",
   "version": "1.0.0",
   "description": "Fully customizable Nepali (Bikram Sambat) DatePicker for React. Theming, composition, and BS/AD switching out of the box.",
+  "author": {
+    "name": "Apsan",
+    "url": "https://apsan.com.np"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -11,7 +15,7 @@
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./styles": "./dist/styles.css",
+    "./styles": "./src/styles.css",
     "./tailwind": "./tailwind.preset.js"
   },
   "sideEffects": [

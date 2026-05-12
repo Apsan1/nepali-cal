@@ -1,6 +1,10 @@
 {
   "name": "@nepali-cal/core",
   "version": "1.0.0",
+  "author": {
+    "name": "Apsan",
+    "url": "https://apsan.com.np"
+  },
   "description": "Zero-dependency Bikram Sambat ↔ Gregorian conversion engine with full NepaliDate class",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
