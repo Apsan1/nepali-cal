@@ -525,7 +525,7 @@ export function fiscalYear(date: BSDate): FiscalYear {
  */
 export function todayBS(): BSDate {
   const nowMs     = Date.now()
-  const nepalMs   = nowMs + NEPAL_UTC_OFFSET_MINUTES * 60_000
+  const nepalMs   = nowMs + Number(NEPAL_UTC_OFFSET_MINUTES) * 60_000
   const nepalDate = new Date(nepalMs)
 
   // Build a "fake UTC" date using Nepal local time components

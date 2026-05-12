@@ -23,10 +23,25 @@
 // =============================================================================
 
 /** Days per month in each BS year. Index 0 = Baisakh, index 11 = Chaitra. */
-export const BS_CALENDAR_DATA: Readonly<Record<number, readonly [
-  number, number, number, number, number, number,
-  number, number, number, number, number, number
-]>> = {
+export const BS_CALENDAR_DATA: Readonly<
+  Record<
+    number,
+    readonly [
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+    ]
+  >
+> = {
   // ─── 1970s ────────────────────────────────────────────────────
   1970: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
   1971: [31, 31, 32, 31, 32, 30, 30, 29, 30, 29, 30, 30],
@@ -171,7 +186,7 @@ export const BS_CALENDAR_DATA: Readonly<Record<number, readonly [
   2098: [31, 31, 32, 31, 31, 31, 29, 30, 30, 29, 30, 30],
   2099: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
   2100: [31, 32, 31, 32, 30, 31, 30, 29, 30, 29, 30, 30],
-}
+};
 
 /**
  * The anchor point that all BS↔AD arithmetic is based on.
@@ -181,13 +196,83 @@ export const BS_EPOCH = {
   bs: { year: 2000, month: 1, day: 1 } as const,
   /** 14 April 1943 UTC midnight */
   ad: new Date(Date.UTC(1943, 3, 14)),
-} as const
+} as const;
 
 /** Earliest BS year in the data table */
-export const BS_MIN_YEAR = 1970 as const
+export const BS_MIN_YEAR = 1970 as const;
 
 /** Latest BS year in the data table */
-export const BS_MAX_YEAR = 2100 as const
+export const BS_MAX_YEAR = 2100 as const;
 
 /** Nepal Standard Time offset from UTC, in minutes (UTC+5:45) */
-export const NEPAL_UTC_OFFSET_MINUTES = 345 as const
+export const NEPAL_UTC_OFFSET_MINUTES = 345 as const;
+
+export const todayBS = (): NepaliDate => {
+  const now = new Date();
+  const utcNow = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+  const nepaliNow = new Date(
+    utcNow.getTime() + NEPAL_UTC_OFFSET_MINUTES * 60000,
+  );
+  return adToBS(nepaliNow);
+};
+
+export type NepaliDate = {
+  year: number;
+  month: number;
+  day: number;
+};
+
+export function adToBS(adDate: Date): NepaliDate {
+  const utcDate = new Date(
+    adDate.getTime() - adDate.getTimezoneOffset() * 60000,
+  );
+  const nepaliDate = new Date(
+    utcDate.getTime() + NEPAL_UTC_OFFSET_MINUTES * 60000,
+  );
+  const dayOffset = Math.floor(
+    (nepaliDate.getTime() - BS_EPOCH.ad.getTime()) / 86400000,
+  );
+
+  let bsYear: number = BS_EPOCH.bs.year;
+  let bsMonth: number = BS_EPOCH.bs.month;
+  let bsDay: number = BS_EPOCH.bs.day;
+
+  let remainingDays: number = dayOffset;
+
+  while (remainingDays !== 0) {
+    const daysInCurrentMonth = BS_CALENDAR_DATA[bsYear][bsMonth - 1];
+    if (remainingDays > 0) {
+      if (bsDay < daysInCurrentMonth) {
+        const daysToAdd = Math.min(remainingDays, daysInCurrentMonth - bsDay);
+        bsDay += daysToAdd;
+        remainingDays -= daysToAdd;
+      } else {
+        bsDay = 1;
+        if (bsMonth < 12) {
+          bsMonth += 1;
+        } else {
+          bsMonth = 1;
+          bsYear += 1;
+        }
+        remainingDays -= 1; // Move to the next month
+      }
+    } else {
+      if (bsDay > 1) {
+        const daysToSubtract = Math.min(-remainingDays, bsDay - 1);
+        bsDay -= daysToSubtract;
+        remainingDays += daysToSubtract;
+      } else {
+        if (bsMonth > 1) {
+          bsMonth -= 1;
+        } else {
+          bsMonth = 12;
+          bsYear -= 1;
+        }
+        bsDay = BS_CALENDAR_DATA[bsYear][bsMonth - 1];
+        remainingDays += 1; // Move to the previous month
+      }
+    }
+  }
+
+  return { year: bsYear, month: bsMonth, day: bsDay };
+}
