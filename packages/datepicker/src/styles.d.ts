@@ -1,1 +1,1 @@
-declare module "@nepali-cal/datepicker/styles";
+declare module "@nepali-cal/datepicker/styles.css";
